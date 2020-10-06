@@ -3,7 +3,7 @@
   border-image: none;
 }
 
-:global(input[type=text]) {
+:global(input[type="text"]) {
   width: 100%;
   padding: 0.5rem;
   margin: 8px 0;
@@ -54,22 +54,20 @@
 
 .scroller {
   overflow-y: scroll !important;
+  border: 1px solid red;
 }
 
-.scroller::-webkit-scrollbar-track
-{
-	background-color: #cccccc;
+.scroller::-webkit-scrollbar-track {
+  background-color: #cccccc;
 }
 
-.scroller::-webkit-scrollbar
-{
-	width: 4px;
-	background-color: #cccccc;
+.scroller::-webkit-scrollbar {
+  width: 4px;
+  background-color: #cccccc;
 }
 
-.scroller::-webkit-scrollbar-thumb
-{
-	background-color: #A9A9A9;
+.scroller::-webkit-scrollbar-thumb {
+  background-color: #a9a9a9;
 }
 
 .sidebar {
@@ -81,7 +79,7 @@
 
 .select {
   position: fixed !important;
-  top: .5rem;
-  left: .5rem;
+  top: 0.5rem;
+  left: 0.5rem;
   width: 300px;
 }

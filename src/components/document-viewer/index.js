@@ -17,21 +17,21 @@ class DocumentViewer extends React.Component {
   static displayName = "Viewer";
 
   static propTypes = {
-    initialScrollOffset: PropTypes.number
+    initialScrollOffset: PropTypes.number,
   };
 
   static defaultProps = {
-    initialScrollOffset: 0
+    initialScrollOffset: 0,
   };
 
   state = {
     documentBody: {},
     documentSize: {
       width: 0,
-      height: 0
+      height: 0,
     },
     documentZoom: 1,
-    scrollOffset: this.props.initialScrollOffset
+    scrollOffset: this.props.initialScrollOffset,
   };
 
   documentContainer = React.createRef();
@@ -41,32 +41,35 @@ class DocumentViewer extends React.Component {
   componentDidMount() {
     const { documentZoom } = this.state;
 
-    PdfJs.getDocument(
-      defaultUrl
-    ).then(pdf => {
-      pdf.getPage(1).then(page => {
-        /**
-         * Get size of the first page for total document size estmation.
-         */
-        const { width, height } = page.getViewport(documentZoom);
-        // debugger
-        this.setState({
-          documentBody: pdf,
-          documentSize: {
-            width,
-            height
-          }
+    PdfJs.getDocument(defaultUrl).then(
+      (pdf) => {
+        pdf.getPage(1).then((page) => {
+          /**
+           * Get size of the first page for total document size estmation.
+           */
+          console.log(page);
+          const { width, height } = page.getViewport(documentZoom);
+          console.log(page.getViewport(documentZoom));
+          // debugger
+          this.setState({
+            documentBody: pdf,
+            documentSize: {
+              width,
+              height,
+            },
+          });
         });
-      });
-    }, (reason) => {
-      console.log(reason);
-    });
+      },
+      (reason) => {
+        console.log(reason);
+      }
+    );
   }
 
   handleDocumentScroll = ({
     scrollDirection,
     scrollOffset,
-    scrollUpdateWasRequested
+    scrollUpdateWasRequested,
   }) => {
     this.setState({ scrollOffset });
   };
@@ -76,37 +79,39 @@ class DocumentViewer extends React.Component {
     const {
       documentBody,
       documentZoom,
-      documentSize
+      documentSize,
       // scrollOffset
     } = this.state;
     const { numPages } = documentBody;
     const { height: pageHeight } = documentSize;
 
     return (
-      <div
-        className={styles.viewer}
-        tabIndex={0}
-      >
+      <div className={styles.viewer} tabIndex={0}>
         <div className={styles.content}>
           <div className={styles.document} ref={this.documentContainer}>
             {this.documentContainer.current && (
               <DocumentSize>
-                {({ width, height }) => (
-                  <Document
-                    className={styles.scroller}
-                    ref={this.scroller}
-                    innerRef={this.document}
-                    initialScrollOffset={initialScrollOffset}
-                    height={height}
-                    width={width}
-                    itemCount={numPages}
-                    itemData={{ documentBody, documentZoom, ...other }}
-                    itemSize={pageHeight}
-                    onScroll={this.handleDocumentScroll}
-                  >
-                    {DocumentView}
-                  </Document>
-                )}
+                {({ width, height }) => {
+                  console.log(width, height);
+                  return (
+                    <Document
+                      className={`${styles.scroller} Document1 ${
+                        width + "--" + height
+                      }`}
+                      ref={this.scroller}
+                      innerRef={this.document}
+                      initialScrollOffset={initialScrollOffset}
+                      height={height}
+                      width={width}
+                      itemCount={numPages}
+                      itemData={{ documentBody, documentZoom, ...other }}
+                      itemSize={1122}
+                      onScroll={this.handleDocumentScroll}
+                    >
+                      {DocumentView}
+                    </Document>
+                  );
+                }}
               </DocumentSize>
             )}
           </div>

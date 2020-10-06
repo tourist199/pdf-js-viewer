@@ -8,13 +8,13 @@ class DocumentView extends React.Component {
   static propTypes = {
     index: PropTypes.number,
     style: PropTypes.object,
-    data: PropTypes.any
+    data: PropTypes.any,
   };
 
   state = {
     page: null,
     width: 0,
-    height: 0
+    height: 0,
   };
 
   container = React.createRef();
@@ -23,15 +23,15 @@ class DocumentView extends React.Component {
   componentDidMount() {
     const {
       data: { documentBody, documentZoom: scale, onDrop, onDragEnd },
-      index
+      index,
     } = this.props;
 
     const pageNumber = index + 1;
 
-    documentBody.getPage(pageNumber).then(page => {
+    documentBody.getPage(pageNumber).then((page) => {
       const { current: container } = this.container;
       const viewport = page.getViewport(scale);
-      const { width, height } = viewport;
+      let { width, height } = viewport;
 
       this.setState({ page, width, height }, () => {
         const textLayerFactory = new pdfjsViewer.DefaultTextLayerFactory();
@@ -42,7 +42,7 @@ class DocumentView extends React.Component {
           scale,
           defaultViewport: page.getViewport(scale),
           textLayerFactory,
-          annotationLayerFactory
+          annotationLayerFactory,
         });
 
         pageView.setPdfPage(page);
@@ -51,22 +51,22 @@ class DocumentView extends React.Component {
     });
 
     // Bind handle drop event
-    const { current: container } = this.container
+    const { current: container } = this.container;
     container.addEventListener("drop", function (event) {
-      return onDrop(event, ENUM_SIGNED, pageNumber)
+      return onDrop(event, ENUM_SIGNED, pageNumber);
     });
     container.addEventListener("dragover", function (event) {
       event.preventDefault();
-      return onDragEnd(event)
+      return onDragEnd(event);
     });
   }
 
   onDragOver(event) {
-    event.preventDefault()
+    event.preventDefault();
   }
 
   onDragEnter(event) {
-    event.preventDefault()
+    event.preventDefault();
   }
 
   render() {
@@ -74,7 +74,7 @@ class DocumentView extends React.Component {
     const { style } = this.props;
 
     return (
-      <div style={style} ref={this.dropzone}>
+      <div style={{ ...style, border: "1px solid green" }} ref={this.dropzone}>
         <div
           ref={this.container}
           width={width}

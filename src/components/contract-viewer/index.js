@@ -131,9 +131,6 @@ function ContractViewer() {
   };
 
 
-    console.log(signedSignatures);
-
-
   return (
     <div className={styles.root}>
       <div className={styles.signatureContainer}>

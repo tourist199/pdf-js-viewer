@@ -25,7 +25,8 @@
 }
 
 .root .contractContainer {
-  flex-basis: 60%;
+  flex-basis: 80%;
+  height: 90%;
 }
 
 .dropzone {
